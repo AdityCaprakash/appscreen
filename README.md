@@ -205,3 +205,29 @@ MIT License - feel free to use, modify, and distribute.
 ## Author
 
 Proudly vibe coded by [Stefan](https://github.com/BlackMac) at [YuzuHub](https://yuzuhub.com/en) — building smart AI products from Düsseldorf, Germany.
+
+
+## Caching Patterns
+
+### Cache-Aside (recommended)
+```java
+public Item getItem(Long id) {
+    Item cached = cache.get("item:" + id);
+    if (cached != null) return cached;
+
+    Item fromDB = itemRepo.findById(id).orElseThrow();
+    cache.put("item:" + id, fromDB, Duration.ofMinutes(5));
+    return fromDB;
+}
+```
+
+### Write-Through
+Write to DB, then update cache synchronously. Good when reads far exceed writes.
+
+### Write-Behind
+Write to cache only, async flush to DB. Fastest but risk of data loss on crash.
+
+### Which for appscreen?
+- **Hot config**: Write-through (changes must be immediate)
+- **List results**: Cache-aside with 5min TTL + event-driven invalidation
+- **Counts/aggregations**: Write-behind with scheduled flush
