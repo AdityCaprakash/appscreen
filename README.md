@@ -231,3 +231,12 @@ Write to cache only, async flush to DB. Fastest but risk of data loss on crash.
 - **Hot config**: Write-through (changes must be immediate)
 - **List results**: Cache-aside with 5min TTL + event-driven invalidation
 - **Counts/aggregations**: Write-behind with scheduled flush
+
+
+## 🙏 Acknowledgements
+Thanks to these awesome open-source projects:
+- https://github.com/xxx/xxx
+- https://github.com/xxx/xxx
+## 📄 License
+![License-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[MIT](https://opensource.org/licenses/MIT)
